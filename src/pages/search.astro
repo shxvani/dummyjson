@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { searchProducts } from '../services/api';
+
+const url = new URL(Astro.url);
+const search = url.searchParams.get('search');
+const products = search ? await searchProducts(search) : [];
+---
+
+<Layout>
+  <h1>Search Results</h1>
+  
+  <form method="get" action="/search">
+    <input type="text" name="search" placeholder="Search products..." value={search || ''} />
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="product-grid">
+    {products.length > 0 ? (
+      products.map((product: any) => (
+        <ProductCard {...product} />
+      ))
+    ) : (
+      <p>No products found.</p>
+    )}
+  </div>
+</Layout>
+
+<style>
+  form {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    background-color: #e91e63;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #d81b60;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+</style>

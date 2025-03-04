@@ -1,0 +1,43 @@
+---
+// src/components/ProductCard.astro
+export interface Product {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+}
+
+const { id, title, price, thumbnail } = Astro.props;
+---
+
+<a href={`/product/${id}`} class="product-card">
+  <img src={thumbnail} alt={title} />
+  <h2>{title}</h2>
+  <p>${price}</p>
+</a>
+
+<style>
+  .product-card {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .product-card h2 {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+  }
+
+  .product-card p {
+    font-size: 1rem;
+    color: #555;
+  }
+</style>

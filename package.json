@@ -1,0 +1,17 @@
+{
+  "name": "json-api-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.4.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
