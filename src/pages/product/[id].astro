@@ -10,6 +10,8 @@ export async function getStaticPaths() {
   }));
 }
 
+export const prerender = false;
+
 const { id } = Astro.params;
 const product = await fetchProductById(Number(id));
 ---
@@ -25,7 +27,7 @@ const product = await fetchProductById(Number(id));
       <p class="price">Price: ${product.price}</p>
       <p class="rating">Rating: {product.rating} / 5</p>
       <p class="stock">Stock: {product.stock}</p>
-      <button class="buy-button">Buy Now</button>
+      <!-- <button class="buy-button">Buy Now</button> -->
     </div>
   </div>
 </Layout>

@@ -2,18 +2,19 @@
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
-import { fetchProducts } from '../services/api';
+import SearchBar from '../components/SearchBar.astro';
+import { fetchProducts, searchProducts } from '../services/api';
 
-const products = await fetchProducts();
+const url = new URL(Astro.request.url);
+const searchParams = url.searchParams;
+const query = searchParams.get('query') || '';
+const products = query ? await searchProducts(query) : await fetchProducts();
 ---
 
 <Layout>
   <h1>Products</h1>
   
-  <form method="get" action="/search">
-    <input type="text" name="search" placeholder="Search products..." />
-    <button type="submit">Search</button>
-  </form>
+  <SearchBar action="/" />
 
   <div class="product-grid">
     {products.map((product: any) => (
@@ -23,34 +24,6 @@ const products = await fetchProducts();
 </Layout>
 
 <style>
-  form {
-    display: flex;
-    margin-bottom: 16px;
-  }
-
-  input[type="text"] {
-    flex: 1;
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 8px;
-  }
-
-  button {
-    padding: 8px 16px;
-    font-size: 1rem;
-    background-color: #e91e63;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background-color: #d81b60;
-  }
-
   .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
