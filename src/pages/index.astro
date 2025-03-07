@@ -172,9 +172,19 @@ const prevPage = page > 1 ? page - 1 : null;
       price: number;
       thumbnail: string;
     };
+    function debounce(func: (...args: any[]) => void, delay: number) {
+      let debounceTimer: NodeJS.Timeout;
+      return function(this: HTMLInputElement, ...args: any[]) {
+        const context: HTMLInputElement = this;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(context, args), delay);
+      };
+    }
 
     if (searchInput) {
-      searchInput.addEventListener('input', async (event) => {
+    
+      searchInput.addEventListener('input', debounce(async (event) => {
+        
         const query = (searchInput as HTMLInputElement).value.trim().toLowerCase();
         if (query) {
           const products = await searchProducts(query, 30, 0); // Adjust limit and skip as needed
@@ -204,7 +214,7 @@ const prevPage = page > 1 ? page - 1 : null;
             searchResultsDiv.innerHTML = '';
           }
         }
-      });
+      },300));
     }
   });
 </script>
