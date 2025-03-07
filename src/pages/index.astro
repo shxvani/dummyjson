@@ -8,7 +8,12 @@ import { fetchProducts, searchProducts } from '../services/api';
 const url = new URL(Astro.request.url);
 const searchParams = url.searchParams;
 const query = searchParams.get('query') || '';
-const products = query ? await searchProducts(query) : await fetchProducts();
+const page = parseInt(searchParams.get('page') || '1', 10);
+const limit = 30;
+const skip = (page - 1) * limit;
+const products = query ? await searchProducts(query, limit, skip) : await fetchProducts(limit, skip);
+const nextPage = products.length === limit ? page + 1 : null;
+const prevPage = page > 1 ? page - 1 : null;
 ---
 
 <Layout>
@@ -21,6 +26,11 @@ const products = query ? await searchProducts(query) : await fetchProducts();
       <ProductCard {...product} />
     ))}
   </div>
+
+  <div class="pagination">
+    {prevPage && <a href={`/?query=${query}&page=${prevPage}`}>&laquo; Previous</a>}
+    {nextPage && <a href={`/?query=${query}&page=${nextPage}`}>Next &raquo;</a>}
+  </div>
 </Layout>
 
 <style>
@@ -28,5 +38,23 @@ const products = query ? await searchProducts(query) : await fetchProducts();
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .pagination a {
+    padding: 8px 16px;
+    background-color: #0070f3;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  .pagination a:hover {
+    background-color: #005bb5;
   }
 </style>
