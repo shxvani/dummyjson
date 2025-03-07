@@ -1,5 +1,4 @@
 ---
-// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import SearchBar from '../components/SearchBar.astro';
@@ -17,7 +16,7 @@ const prevPage = page > 1 ? page - 1 : null;
 ---
 
 <Layout>
-  <h1>Products</h1>
+  <h1>Store</h1>
   
   <SearchBar action="/" />
 
@@ -34,10 +33,94 @@ const prevPage = page > 1 ? page - 1 : null;
 </Layout>
 
 <style>
+  body {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 4.5rem;
+    text-align: center;
+    color: #040302;
+    /* text-shadow: 3px 3px #ff0, 6px 6px #f00; */
+  }
+
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 50px;
+    padding: 80px;
+  }
+
+  .product-card {
+    border: 2px solid #000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0, 12px 12px 0 #f00;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #fff;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    max-width: 150px; /* Adjusted width */
+    max-height: 200px; /* Adjusted height */
+    margin: auto;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0, 12px 12px 0 #f00, 16px 16px 0 #00f;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #000;
+  }
+
+  .product-card h2 {
+    font-size: 1rem; /* Adjusted font size */
+    margin: 0.5rem;
+    color: #333;
+    text-shadow: 2px 2px #ff0, 4px 4px #f00;
+  }
+
+  .product-card p {
+    font-size: 0.875rem; /* Adjusted font size */
+    color: #555;
+    margin: 0.5rem;
+  }
+
+  .product-card .price {
+    font-size: 1rem; /* Adjusted font size */
+    color: #0070f3;
+    margin: 0.5rem;
+    text-shadow: 2px 2px #ff0, 4px 4px #f00;
+  }
+
+  .product-card .description {
+    font-size: 0.75rem; /* Adjusted font size */
+    color: #777;
+    margin: 0.5rem;
+  }
+
+  .product-card .button {
+    display: block;
+    text-align: center;
+    padding: 0.5rem; /* Adjusted padding */
+    background-color: #0070f3;
+    color: white;
+    text-decoration: none;
+    border-radius: 0 0 8px 8px;
+    transition: background-color 0.2s;
+    text-shadow: 2px 2px #ff0, 4px 4px #f00;
+  }
+
+  .product-card .button:hover {
+    background-color: #005bb5;
   }
 
   .pagination {
@@ -48,13 +131,20 @@ const prevPage = page > 1 ? page - 1 : null;
 
   .pagination a {
     padding: 8px 16px;
-    background-color: #0070f3;
-    color: white;
+    margin-bottom: 3%;
+    margin-left: auto;
+    margin-right: a ;
+    background-color: #e8e8aa;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     border-radius: 4px;
+    border: 2px solid #000;
+    font-size: 1.25rem;
+    transition: background-color 0.2s, transform 0.2s;
   }
 
   .pagination a:hover {
-    background-color: #005bb5;
+    background-color: #e5533d;
+    transform: translateY(-3px);
   }
 </style>

@@ -5,6 +5,7 @@ const { onInput } = Astro.props;
 
 <form class="search-bar">
   <input type="text" name="query" placeholder="Search products..." required oninput={onInput} />
+  <!-- <button type="submit">Search</button> -->
 </form>
 
 <style>
@@ -12,12 +13,40 @@ const { onInput } = Astro.props;
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
+    justify-content: center;
   }
 
   .search-bar input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0;
+    transition: box-shadow 0.2s, transform 0.2s;
+    width: 300px;
+  }
+
+  .search-bar input:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0;
+    transform: translateY(-3px);
+  }
+
+  .search-bar button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: 2px solid #000;
+    border-radius: 8px;
+    color: white;
+    text-shadow: 2px 2px #ff0;
+    box-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .search-bar button:hover {
+    /* background-color: #e5533d; */
+    /* box-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0, 12px 12px 0 #f00; */
+    transform: translateY(-3px);
   }
 </style>

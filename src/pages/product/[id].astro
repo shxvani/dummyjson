@@ -3,12 +3,12 @@
 import Layout from '../../layouts/Layout.astro';
 import { fetchProductById, fetchProducts } from '../../services/api';
 
-export async function getStaticPaths() {
-  const products = await fetchProducts(30, 0);
-  return products.map((product: { id: number }) => ({
-    params: { id: product.id.toString() }
-  }));
-}
+// export async function getStaticPaths() {
+//   const products = await fetchProducts(30,0);
+//   return products.map((product: { id: number }) => ({
+//     params: { id: product.id.toString() }
+//   }));
+// }
 
 export const prerender = false;
 
@@ -29,10 +29,14 @@ const product = await fetchProductById(Number(id));
       <p class="stock">Stock: {product.stock}</p>
       <!-- <button class="buy-button">Buy Now</button> -->
     </div>
+    <button class="go-back" onclick="history.back()">Go Back</button>
   </div>
 </Layout>
 
 <style>
+  * {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  }
   .product-detail {
     display: flex;
     flex-direction: column;
@@ -40,9 +44,24 @@ const product = await fetchProductById(Number(id));
     max-width: 1200px;
     margin: 0 auto;
     padding: 16px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid black; /* Inner border */
+    outline-offset: 10px; /* Space between inner and outer border */
+
+    /* outline: 5px solid rgb(8, 8, 8); Outer border */
+    background-color: #fff; /* White background for the card */
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .product-detail::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 5px solid black;
+    z-index: -1;
   }
 
   @media (min-width: 768px) {
@@ -87,7 +106,7 @@ const product = await fetchProductById(Number(id));
   .product-info .price {
     font-size: 1.5rem;
     margin-bottom: 8px;
-    color: #e91e63;
+    color: #930a38;
   }
 
   .product-info .rating {
@@ -99,7 +118,7 @@ const product = await fetchProductById(Number(id));
   .product-info .stock {
     font-size: 1.2rem;
     margin-bottom: 16px;
-    color: #4caf50;
+    color: #06810a;
   }
 
   .buy-button {
@@ -115,5 +134,27 @@ const product = await fetchProductById(Number(id));
 
   .buy-button:hover {
     background-color: #d81b60;
+  }
+
+  .go-back {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ffcc00;
+    border: 2px solid black;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    text-align: center;
+    padding: 0.5rem; /* Adjusted padding */
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    border-radius: 8px 8px 8px 8px;
+    transition: background-color 0.2s;
+    /* text-shadow: 2px 2px #ff0; */
+  }
+
+   .go-back:hover {
+    background-color: #ff9900;
   }
 </style>
